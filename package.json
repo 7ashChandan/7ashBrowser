@@ -1,0 +1,41 @@
+{
+  "name": "7ash",
+  "version": "0.1.1",
+  "description": "A privacy-focused, customizable desktop web browser built with Electron.",
+  "author": "Arush",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^45.4.1",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.7ash",
+    "productName": "7ash Browser",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "7ash-preload.js",
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "src/7ash.ico",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "include": "src/windows-browser-registration.nsh"
+    }
+  },
+  "dependencies": {
+    "@ghostery/adblocker-electron": "^2.20.3"
+  }
+}

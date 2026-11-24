@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>7ash Browser</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside id="sidebar">
+    <div class="drag-region"></div>
+
+    <div class="profile-row">
+      <button id="btn-profile" class="profile-button" type="button" title="Edit local profile" aria-label="Edit local profile">
+        <img id="profile-avatar" src="duck-logo.jpeg" alt="" />
+        <span id="profile-initials" hidden></span>
+      </button>
+      <button id="btn-profile-name" class="profile-name profile-open-button" type="button" title="Edit local profile">My Browser</button>
+      <button id="btn-more" class="icon-button more-button" title="Browser menu" aria-label="Browser menu" aria-haspopup="true" aria-expanded="false">•••</button>
+    </div>
+
+    <div class="navigation-row">
+      <button id="btn-back" class="icon-button" title="Back; opens the start page if there is no history (Ctrl+[)" aria-label="Back">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button id="btn-forward" class="icon-button" title="Forward (Ctrl+])" aria-label="Forward">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <button id="btn-reload" class="icon-button" title="Reload (Ctrl+R)" aria-label="Reload">
+        <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 1-2.34-5.66L20 7.68"/><path d="M20 3v4.68h-4.68"/></svg>
+      </button>
+    </div>
+
+    <form id="address-form" class="address-form">
+      <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16l4 4"/></svg>
+      <input id="address-input" type="text" placeholder="Search or enter address" autocomplete="off" spellcheck="false" />
+      <kbd>⌘L</kbd>
+    </form>
+
+    <section class="sidebar-shortcuts" aria-label="Browser features">
+      <div class="section-heading"><span>Library</span></div>
+      <div class="shortcut-grid">
+        <button data-open-panel="bookmarks" title="Bookmarks" aria-label="Bookmarks"><span>☆</span><span class="shortcut-label">Bookmarks</span></button>
+        <button data-open-panel="history" title="History" aria-label="History"><span>◷</span><span class="shortcut-label">History</span></button>
+        <button data-open-panel="downloads" title="Downloads" aria-label="Downloads"><span>↓</span><span class="shortcut-label">Downloads</span></button>
+        <button data-open-panel="tabs" title="Search tabs" aria-label="Search tabs"><span>⌕</span><span class="shortcut-label">Search tabs</span></button>
+        <button data-open-panel="command" title="Command bar (Ctrl+K)" aria-label="Command bar"><span>⌘</span><span class="shortcut-label">Command bar</span></button>
+        <button data-open-panel="ai" title="Scan the current page with AI" aria-label="AI screen scan"><span>✦</span><span class="shortcut-label">AI screen scan</span></button>
+        <button data-open-duck-ai title="Duck.ai" aria-label="Duck.ai"><span>✦</span><span class="shortcut-label">Duck.ai</span></button>
+        <button data-open-panel="extensions" title="Extensions" aria-label="Extensions"><span>◇</span><span class="shortcut-label">Extensions</span></button>
+        <button data-open-panel="settings" title="Settings" aria-label="Settings"><span>⚙</span><span class="shortcut-label">Settings</span></button>
+      </div>
+    </section>
+
+    <section class="sidebar-section pinned-section">
+      <div class="section-heading">
+        <span>Pinned</span>
+        <button id="btn-add-pinned" class="section-action" title="New tab">+</button>
+      </div>
+      <div id="pinned-list"></div>
+    </section>
+
+    <section id="frequent-sites-section" class="sidebar-section frequent-sites-section" aria-label="Frequent sites" hidden>
+      <div class="section-heading">
+        <span>Frequent sites</span>
+        <button id="btn-add-frequent-site" class="section-action" title="Add a frequent site">+</button>
+      </div>
+      <div id="frequent-sites-list"></div>
+    </section>
+
+    <section class="sidebar-section tabs-section">
+      <div class="section-heading">
+        <span>Today</span>
+        <button id="btn-new-tab" class="section-action" title="New tab (Ctrl+T)">+</button>
+      </div>
+      <div id="tab-list"></div>
+    </section>
+
+    <div class="sidebar-footer">
+      <nav id="space-bar" aria-label="Spaces"></nav>
+      <button id="btn-manage-spaces" class="footer-button" title="Manage spaces">＋</button>
+      <button id="btn-library" class="footer-button" title="Library">▦</button>
+      <button id="btn-search-tabs" class="footer-button" title="Search tabs">⌕</button>
+    </div>
+  </aside>
+
+  <div id="backdrop" class="backdrop hidden"></div>
+  <section id="browser-menu" class="browser-menu hidden" aria-label="Browser menu">
+    <div class="browser-menu-title">Quick actions</div>
+    <button class="browser-menu-action" data-menu-action="new-tab">New tab <kbd>Ctrl+T</kbd></button>
+    <button class="browser-menu-action" data-menu-action="command">Command bar <kbd>Ctrl+K</kbd></button>
+    <button class="browser-menu-action" data-menu-action="spaces">Manage workspaces</button>
+    <div class="browser-menu-divider"></div>
+    <label class="browser-menu-setting">
+      <span>Color theme</span>
+      <select id="menu-theme">
+        <option value="cloud">Cloud</option>
+        <option value="arc-light">Arc Light</option>
+        <option value="arc-dark">Arc Dark</option>
+        <option value="zen-sakura">Zen Sakura</option>
+        <option value="zen-forest">Zen Forest</option>
+        <option value="zen-midnight">Zen Midnight</option>
+        <option value="dark">Dark</option>
+        <option value="plain">Plain</option>
+      </select>
+    </label>
+    <label class="browser-menu-setting">
+      <span>Accent color</span>
+      <input id="menu-accent" type="color" />
+    </label>
+    <label class="browser-menu-toggle">
+      <input id="menu-compact" type="checkbox" />
+      <span>Compact sidebar</span>
+    </label>
+    <label class="browser-menu-toggle">
+      <input id="menu-animations" type="checkbox" />
+      <span>Animate tabs</span>
+    </label>
+    <div class="browser-menu-divider"></div>
+    <label class="browser-menu-toggle">
+      <input id="menu-trackers" type="checkbox" />
+      <span>Block ads and trackers</span>
+    </label>
+    <label class="browser-menu-toggle">
+      <input id="menu-privacy-signals" type="checkbox" />
+      <span>Send privacy signals</span>
+    </label>
+    <button class="browser-menu-action" data-menu-action="clear-data">Clear browsing data…</button>
+    <div id="browser-menu-status" class="browser-menu-status" aria-live="polite"></div>
+    <div class="browser-menu-divider"></div>
+    <button class="browser-menu-action" data-menu-action="settings">Arc-style Settings…</button>
+  </section>
+  <aside id="feature-panel" class="feature-panel hidden" aria-label="Browser panel">
+    <header class="panel-header">
+      <div class="panel-heading">
+        <button id="btn-panel-back" class="panel-back" title="Back to browser" aria-label="Back to browser">
+          <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <h2 id="panel-title">Library</h2>
+      </div>
+      <button id="btn-close-panel" class="panel-close" title="Close">×</button>
+    </header>
+    <nav id="panel-tabs" class="panel-tabs">
+      <button data-panel="bookmarks" class="active">Bookmarks</button>
+      <button data-panel="history">History</button>
+      <button data-panel="downloads">Downloads</button>
+      <button data-panel="tabs">Search</button>
+      <button data-panel="command">Commands</button>
+      <button data-panel="ai">AI Scan</button>
+      <button data-panel="spaces">Spaces</button>
+      <button data-panel="extensions">Extensions</button>
+      <button data-panel="settings">Settings</button>
+    </nav>
+    <div id="panel-content" class="panel-content"></div>
+  </aside>
+
+  <main id="content" aria-hidden="true"></main>
+  <script src="rendered.js"></script>
+</body>
+</html>

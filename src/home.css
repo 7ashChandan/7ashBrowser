@@ -1,0 +1,323 @@
+* { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  color: #302d34;
+  font-family: Inter, "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at 78% 18%, rgba(231, 211, 255, .66), transparent 34%),
+    radial-gradient(ellipse at 19% 84%, rgba(213, 230, 255, .7), transparent 37%),
+    #f7f5f8;
+}
+
+body.has-custom-background {
+  background-image:
+    linear-gradient(rgba(247,245,248,.66), rgba(247,245,248,.78)),
+    var(--home-background-image);
+  background-color: #f7f5f8;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.home {
+  width: min(720px, calc(100% - 48px));
+  margin: 40px 0;
+}
+
+h1 {
+  margin: 0 0 24px;
+  color: #4b4650;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 550;
+  letter-spacing: -.035em;
+  text-align: center;
+}
+
+#search-form {
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border: 1px solid rgba(68, 59, 77, .1);
+  border-radius: 17px;
+  background: rgba(255,255,255,.91);
+  box-shadow: 0 8px 32px rgba(67, 55, 81, .1);
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+
+#search-form:focus-within {
+  border-color: rgba(123, 96, 200, .38);
+  box-shadow: 0 0 0 4px rgba(137, 112, 220, .1), 0 8px 32px rgba(67, 55, 81, .1);
+}
+
+#search-form svg {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  fill: none;
+  stroke: #8b8490;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+#search-input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  color: #302d34;
+  background: transparent;
+  font: 16px "Segoe UI", sans-serif;
+}
+
+#search-input::placeholder { color: #a39da7; }
+#search-input::-webkit-search-cancel-button { cursor: pointer; }
+
+kbd {
+  padding: 4px 7px;
+  border: 1px solid rgba(75, 66, 83, .11);
+  border-radius: 6px;
+  color: #98919d;
+  background: #faf9fb;
+  font: 11px "Segoe UI", sans-serif;
+}
+
+.frequent-sites {
+  margin-top: 40px;
+}
+
+.sites-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.sites-heading h2 {
+  margin: 0;
+  color: #514a58;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.add-site,
+.save-button,
+.secondary-button {
+  min-height: 34px;
+  border: 0;
+  border-radius: 9px;
+  padding: 0 11px;
+  cursor: pointer;
+  font: 600 12px "Segoe UI", sans-serif;
+}
+
+.add-site {
+  color: #5b459b;
+  background: rgba(101, 72, 184, .1);
+}
+
+.add-site:hover { background: rgba(101, 72, 184, .17); }
+
+.site-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 10px;
+}
+
+.empty-sites {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 16px;
+  border: 1px dashed rgba(75, 66, 83, .2);
+  border-radius: 12px;
+  color: #716978;
+  font-size: 13px;
+  text-align: center;
+}
+
+.site-card {
+  position: relative;
+  min-width: 0;
+  min-height: 76px;
+  border: 1px solid rgba(68, 59, 77, .09);
+  border-radius: 13px;
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 3px 12px rgba(67, 55, 81, .045);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.site-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(67, 55, 81, .1);
+}
+
+.site-link {
+  width: 100%;
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px;
+  border-radius: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 13px;
+  color: white;
+  background: linear-gradient(135deg, #8b72ef, #eb84aa);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.site-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-site {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 7px;
+  color: #716978;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity .12s ease;
+}
+
+.remove-site:hover {
+  color: #a43550;
+  background: rgba(164, 53, 80, .1);
+}
+
+.edit-site-icon {
+  position: absolute;
+  top: 5px;
+  right: 31px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 7px;
+  color: #fff;
+  background: rgba(48, 45, 52, .68);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .12s ease;
+}
+
+.site-card:hover .remove-site,
+.site-card:hover .edit-site-icon,
+.site-card:focus-within .remove-site,
+.site-card:focus-within .edit-site-icon { opacity: 1; }
+
+.site-message {
+  min-height: 18px;
+  margin: 7px 2px;
+  color: #65558a;
+  font-size: 12px;
+}
+
+.site-message.error { color: #a43550; }
+
+.site-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+  padding: 14px;
+  border: 1px solid rgba(68, 59, 77, .1);
+  border-radius: 13px;
+  background: rgba(255,255,255,.9);
+}
+
+.site-form[hidden] { display: none !important; }
+
+.site-form label {
+  display: grid;
+  gap: 6px;
+  color: #655e6a;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.site-form input {
+  width: 100%;
+  height: 38px;
+  border: 1px solid rgba(70, 64, 75, .13);
+  border-radius: 9px;
+  outline: 0;
+  padding: 0 10px;
+  color: #302d34;
+  background: white;
+  font: 13px "Segoe UI", sans-serif;
+}
+
+.site-form input:focus {
+  border-color: rgba(123, 96, 200, .45);
+  box-shadow: 0 0 0 3px rgba(137, 112, 220, .09);
+}
+
+.site-form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.site-icon-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-icon-picker img {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  object-fit: cover;
+}
+
+.site-icon-picker img[hidden] { display: none; }
+.site-icon-picker button:disabled { opacity: .5; cursor: default; }
+
+.secondary-button {
+  color: #615a66;
+  background: #efedf1;
+}
+
+.save-button {
+  color: white;
+  background: #6548b8;
+}
+
+@media (max-width: 560px) {
+  .site-form { grid-template-columns: 1fr; }
+  .site-form-actions { grid-column: auto; }
+}

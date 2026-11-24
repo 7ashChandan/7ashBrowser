@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New Tab</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <main class="home">
+    <h1>What are you looking for?</h1>
+    <form id="search-form" role="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="6"></circle>
+        <path d="m16 16 4 4"></path>
+      </svg>
+      <input id="search-input" type="search" placeholder="Search the web" autocomplete="off" autofocus />
+      <kbd>Enter</kbd>
+    </form>
+
+    <section class="frequent-sites" aria-label="Frequent sites">
+      <header class="sites-heading">
+        <h2>Frequent sites</h2>
+        <button id="add-site" class="add-site">+ Add site</button>
+      </header>
+      <div id="site-grid" class="site-grid"></div>
+      <p id="site-message" class="site-message" role="status"></p>
+      <form id="site-form" class="site-form" hidden>
+        <label>
+          Site name
+          <input id="site-name" type="text" maxlength="40" placeholder="e.g. GitHub" required />
+        </label>
+        <label>
+          Website address
+          <input id="site-url" type="text" placeholder="example.com" required />
+        </label>
+        <label>
+          Custom icon (optional)
+          <div class="site-icon-picker">
+            <button id="choose-site-icon" class="secondary-button" type="button">Choose image</button>
+            <img id="site-icon-preview" alt="Site icon preview" hidden />
+            <button id="clear-site-icon" class="secondary-button" type="button" disabled>Reset</button>
+          </div>
+        </label>
+        <div class="site-form-actions">
+          <button id="cancel-site" class="secondary-button" type="button">Cancel</button>
+          <button class="save-button" type="submit">Add site</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="site-shortcuts.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>
